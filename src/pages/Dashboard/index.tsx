@@ -1,10 +1,11 @@
-/* eslint-disable  */
 import { useState, useEffect, SetStateAction } from 'react';
 import { Tabs, Table } from 'antd';
 import { ReactComponent as AddUserIcon } from 'assets/icons/user-plus.svg';
 import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
 import { ReactComponent as PostIcon } from 'assets/icons/post.svg';
 import { ReactComponent as MessageIcon } from 'assets/icons/message.svg';
+import UserCard from '../../components/Usercard';
+import Lady from '../../assets/images/alhaja.png';
 
 const { TabPane } = Tabs;
 
@@ -134,21 +135,30 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="container px-8 mt-16">
-          <div className="grid sm:grid-cols-2 grid-cols-1">
-            <Tabs defaultActiveKey="1">
-              <TabPane tab="All Users" key="1">
-                <Table
-                  rowSelection={rowSelection}
-                  columns={columns}
-                  dataSource={data}
-                  pagination={{ position: ['bottomLeft'] }}
-                />
-              </TabPane>
-              <TabPane tab="All Posts" key="2">
-                Content of Tab Pane 2
-              </TabPane>
-            </Tabs>
+        <div className="container sm:px-8 mt-16">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-3 md:grid-cols-1 sm:gap-16 grid-cols-1">
+            <div className="col-span-2">
+              <Tabs defaultActiveKey="1">
+                <TabPane tab="All Users" key="1">
+                  <div className="shadow-lg">
+                    <Table
+                      rowSelection={rowSelection}
+                      columns={columns}
+                      dataSource={data}
+                      pagination={{ position: ['bottomLeft'] }}
+                      scroll={{ y: 308 }}
+                    />
+                  </div>
+                </TabPane>
+                <TabPane tab="All Posts" key="2">
+                  Content of Tab Pane 2
+                </TabPane>
+              </Tabs>
+            </div>
+
+            <div>
+              <UserCard />
+            </div>
           </div>
         </div>
       </div>
