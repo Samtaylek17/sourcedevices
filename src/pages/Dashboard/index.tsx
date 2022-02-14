@@ -4,8 +4,10 @@ import { ReactComponent as AddUserIcon } from 'assets/icons/user-plus.svg';
 import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
 import { ReactComponent as PostIcon } from 'assets/icons/post.svg';
 import { ReactComponent as MessageIcon } from 'assets/icons/message.svg';
-import UserCard from '../../components/Usercard';
-import Lady from '../../assets/images/alhaja.png';
+import ProfileCard from 'components/ProfileCard';
+import PostCard from 'components/PostCard';
+import EmptyPostCard from 'components/EmptyPostCard';
+import Lady from 'assets/images/alhaja.png';
 
 const { TabPane } = Tabs;
 
@@ -157,7 +159,7 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <UserCard />
+              <EmptyPostCard />
             </div>
           </div>
         </div>

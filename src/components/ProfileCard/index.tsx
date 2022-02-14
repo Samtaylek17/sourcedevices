@@ -1,6 +1,7 @@
-import Lady from '../../assets/images/alhaja.png';
+import { FC } from 'react';
+import Lady from 'assets/images/alhaja.png';
 
-const UserCard = () => (
+const ProfileCard: FC = () => (
   <div className="bg-white rounded-lg p-6 h-auto">
     <div className="grid grid-cols-2">
       <img src={Lady} alt={Lady} className="w-full max-w-full h-full pr-3 rounded-md" />
@@ -81,4 +82,4 @@ const UserCard = () => (
   </div>
 );
 
-export default UserCard;
+export default ProfileCard;
