@@ -1,6 +1,6 @@
-/* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { message } from 'antd';
+import { createUser, getAllUsers, getUser } from '../api/endpoints';
 
 interface UserInterface {
   id: string;
@@ -87,3 +87,40 @@ export const {
 } = users.actions;
 
 export default users.reducer;
+
+interface IAction {
+  type: string;
+  payload?: Record<string, unknown> | null;
+}
+
+export const addUser =
+  ({ firstName, lastName, email, title, file }) =>
+  async (dispatch: (arg: IAction) => void) => {
+    try {
+      dispatch(addUserStart());
+      const user = await createUser({ firstName, lastName, email, title, file });
+      dispatch(addUserSuccess(user));
+    } catch (err: any) {
+      dispatch(addUserFailure(err.toString()));
+    }
+  };
+
+export const fetchUsers = () => async (dispatch: Dispatch) => {
+  try {
+    dispatch(getUsersStart());
+    const users = await getAllUsers();
+    dispatch(getUsersSuccess(users));
+  } catch (err: any) {
+    dispatch(getUsersFailure(err.toString()));
+  }
+};
+
+export const fetchUser = (id: string) => async (dispatch: Dispatch) => {
+  try {
+    dispatch(getUserStart());
+    const user = await getUser(id);
+    dispatch(getUserSuccess(user));
+  } catch (err: any) {
+    dispatch(getUserFailure(err.toString()));
+  }
+};
