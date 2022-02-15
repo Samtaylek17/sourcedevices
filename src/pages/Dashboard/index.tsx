@@ -1,19 +1,34 @@
-import { useState, useEffect, SetStateAction } from 'react';
-import { Tabs, Table } from 'antd';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Tabs } from 'antd';
 import { ReactComponent as AddUserIcon } from 'assets/icons/user-plus.svg';
 import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
 import { ReactComponent as PostIcon } from 'assets/icons/post.svg';
 import { ReactComponent as MessageIcon } from 'assets/icons/message.svg';
+import { RootState } from 'app/rootReducer';
 import ProfileCard from 'components/ProfileCard';
 import PostCard from 'components/PostCard';
 import EmptyPostCard from 'components/EmptyPostCard';
+import Table from 'components/Table';
 import Lady from 'assets/images/alhaja.png';
+import { fetchUsers } from '../../slices/userSlice';
 
 const { TabPane } = Tabs;
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const { currentUser, userList } = useSelector((state: RootState) => state.users);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+    console.log("I'm working");
+  }, []);
+
+  const viewUser = () => {
+    console.log('This is a user');
+  };
 
   const openSidebar = () => {
     setSidebarOpen(true);
@@ -25,47 +40,22 @@ const Dashboard = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name'
+      Header: 'TITLE',
+      accessor: 'title'
     },
     {
-      title: 'Age',
-      dataIndex: 'age'
+      Header: 'FIRST NAME',
+      accessor: 'firstName'
     },
     {
-      title: 'Address',
-      dataIndex: 'address'
+      Header: 'LAST NAME',
+      accessor: 'lastName'
+    },
+    {
+      Header: 'ID',
+      accessor: 'id'
     }
   ];
-
-  const data: { key: number; name: string; age: number; address: string }[] = [];
-  for (let i: number = 0; i < 46; i += 1) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      age: 32,
-      address: `London, Park Lane no. ${i}`
-    });
-  }
-
-  const start = () => {
-    // ajax request after empty completing
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-    }, 1000);
-  };
-
-  const onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    setSelectedRowKeys(selectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange
-  };
-
-  const hasSelected = selectedRowKeys.length > 0;
 
   return (
     <div className="flex">
@@ -79,7 +69,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="grow w-24 h-screen overflow-y-scroll bg-light">
-        <div className="w-full flex justify-between bg-white shadow-lg px-10 py-6">
+        <div className="w-full flex justify-between bg-white shadow-lg sm:px-10 px-4 py-6">
           <h2 className="text-2xl font-medium ">Dashboard</h2>
           {!sidebarOpen && (
             <svg
@@ -114,12 +104,12 @@ const Dashboard = () => {
             </svg>
           )}
         </div>
-        <div className="grid sm:grid-cols-3 grid-cols-1 mt-8 gap-x-8 px-10">
+        <div className="grid sm:grid-cols-3 grid-cols-1 mt-8 sm:gap-x-8 sm:px-10 px-4">
           <div className="shadow-lg rounded-md items-center flex bg-white px-8 py-6 my-3 sm:my-0">
             <UserIcon />
             <div className="px-4">
               <p className="uppercase text-xs text-grey">Users</p>
-              <h3 className="text-2xl py-1 font-medium">67</h3>
+              <h3 className="text-2xl py-1 font-medium">{userList.length}</h3>
             </div>
           </div>
           <div className="shadow-lg rounded-md items-center flex bg-white px-8 py-6 my-3 sm:my-0">
@@ -143,13 +133,7 @@ const Dashboard = () => {
               <Tabs defaultActiveKey="1">
                 <TabPane tab="All Users" key="1">
                   <div className="shadow-lg">
-                    <Table
-                      rowSelection={rowSelection}
-                      columns={columns}
-                      dataSource={data}
-                      pagination={{ position: ['bottomLeft'] }}
-                      scroll={{ y: 308 }}
-                    />
+                    <Table body={userList} header={columns} viewData={viewUser} />
                   </div>
                 </TabPane>
                 <TabPane tab="All Posts" key="2">

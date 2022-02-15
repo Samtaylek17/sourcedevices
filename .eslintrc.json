@@ -38,7 +38,21 @@
       }
     ],
     "jsx-a11y/label-has-associated-control": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-nested-ternary": "off"
+  },
+  "globals": {
+    "React": true,
+    "google": true,
+    "mount": true,
+    "mountWithRouter": true,
+    "shallow": true,
+    " shallowWithRouter": true,
+    "context": true,
+    "expect": true,
+    "jsdom": true,
+    "JSX": true
   },
   "overrides": [
     {

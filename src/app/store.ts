@@ -10,12 +10,12 @@ import {
   REGISTER
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { createBlacklistFilter } from 'redux-persist-transform-filter';
+// import { createBlacklistFilter } from 'redux-persist-transform-filter';
 
 import rootReducer from './rootReducer';
 
-const saveSubsetBlacklistFilter = createBlacklistFilter('user', ['isLoading', 'error']);
-const persistConfig = { key: 'root', storage, transforms: [saveSubsetBlacklistFilter] };
+// const saveSubsetBlacklistFilter = createBlacklistFilter('user', ['isLoading', 'error']);
+const persistConfig = { key: 'root', storage, transforms: [] };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: persistedReducer,

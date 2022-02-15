@@ -1,4 +1,4 @@
-import api from '.';
+import api from './api';
 
 interface User {
   id: string;
@@ -23,7 +23,7 @@ export async function createUser({ firstName, lastName, email, title, file }): P
   );
 }
 
-export async function getAllUsers(): Promise<User[]> {
+export async function getAllUsers(): Promise<any> {
   const url = `${process.env.REACT_APP_BASE_URL}/user`;
   return api.get(url);
 }

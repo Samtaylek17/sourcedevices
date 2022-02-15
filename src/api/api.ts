@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || 'https://dummyapi.io/data/v1/',
+  baseURL: process.env.REACT_APP_BASE_URL || 'https://dummyapi.io/data/v1',
   headers: {
     'Content-Type': 'application/json'
   }

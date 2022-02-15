@@ -2,7 +2,7 @@ import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import { createUser, getAllUsers, getUser } from '../api/endpoints';
 
-interface UserInterface {
+export interface UserInterface {
   id: string;
   title: string;
   firstName: string;
@@ -105,11 +105,12 @@ export const addUser =
     }
   };
 
-export const fetchUsers = () => async (dispatch: Dispatch) => {
+export const fetchUsers = () => async (dispatch: (arg: IAction) => void) => {
   try {
     dispatch(getUsersStart());
     const users = await getAllUsers();
-    dispatch(getUsersSuccess(users));
+    console.log(users.data.data);
+    dispatch(getUsersSuccess(users.data.data));
   } catch (err: any) {
     dispatch(getUsersFailure(err.toString()));
   }

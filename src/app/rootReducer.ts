@@ -3,7 +3,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import userReducer from '../slices/userSlice';
 
 const rootReducer = combineReducers({
-  user: userReducer
+  users: userReducer
 });
 
 export default rootReducer;
