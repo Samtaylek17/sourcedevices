@@ -15,6 +15,7 @@ module.exports = {
       current: colors.current,
       primary: '#051A2E',
       grey: '#97A7B4',
+      ash: '#EDEEEF',
       light: '#FAFAFA',
       pink: '#FFF0F0',
       transparent: colors.transparent,
@@ -203,6 +204,10 @@ module.exports = {
       2: '2px',
       4: '4px',
       8: '8px'
+    },
+    borderSpacing: {
+      sm: '0 5px',
+      DEFAULT: '0 10px'
     },
     boxShadow: {
       sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',

@@ -1,6 +1,5 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { message } from 'antd';
-import { createUser, getAllUsers, getUser } from '../api/endpoints';
+import { createUser, getAllUsersWithFilters, getUser } from '../api/endpoints';
 
 export interface UserInterface {
   id: string;
@@ -105,16 +104,16 @@ export const addUser =
     }
   };
 
-export const fetchUsers = () => async (dispatch: (arg: IAction) => void) => {
-  try {
-    dispatch(getUsersStart());
-    const users = await getAllUsers();
-    console.log(users.data.data);
-    dispatch(getUsersSuccess(users.data.data));
-  } catch (err: any) {
-    dispatch(getUsersFailure(err.toString()));
-  }
-};
+export const fetchUsers =
+  (limit?: number, page?: number) => async (dispatch: (arg: IAction) => void) => {
+    try {
+      dispatch(getUsersStart());
+      const users = await getAllUsersWithFilters({ limit, page });
+      dispatch(getUsersSuccess(users.data.data));
+    } catch (err: any) {
+      dispatch(getUsersFailure(err.toString()));
+    }
+  };
 
 export const fetchUser = (id: string) => async (dispatch: Dispatch) => {
   try {

@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Tabs } from 'antd';
+import { Tabs, message, Checkbox } from 'antd';
 import { ReactComponent as AddUserIcon } from 'assets/icons/user-plus.svg';
 import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
 import { ReactComponent as PostIcon } from 'assets/icons/post.svg';
@@ -11,19 +11,19 @@ import PostCard from 'components/PostCard';
 import EmptyPostCard from 'components/EmptyPostCard';
 import Table from 'components/Table';
 import Lady from 'assets/images/alhaja.png';
-import { fetchUsers } from '../../slices/userSlice';
+import UserTable from 'components/UserTable';
+import { fetchUsers } from 'slices/userSlice';
 
 const { TabPane } = Tabs;
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { currentUser, userList } = useSelector((state: RootState) => state.users);
+  const { userList } = useSelector((state: RootState) => state.users);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUsers());
-    console.log("I'm working");
   }, []);
 
   const viewUser = () => {
@@ -37,25 +37,6 @@ const Dashboard = () => {
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
-
-  const columns = [
-    {
-      Header: 'TITLE',
-      accessor: 'title'
-    },
-    {
-      Header: 'FIRST NAME',
-      accessor: 'firstName'
-    },
-    {
-      Header: 'LAST NAME',
-      accessor: 'lastName'
-    },
-    {
-      Header: 'ID',
-      accessor: 'id'
-    }
-  ];
 
   return (
     <div className="flex">
@@ -132,8 +113,8 @@ const Dashboard = () => {
             <div className="col-span-2">
               <Tabs defaultActiveKey="1">
                 <TabPane tab="All Users" key="1">
-                  <div className="shadow-lg">
-                    <Table body={userList} header={columns} viewData={viewUser} />
+                  <div className="">
+                    <UserTable />
                   </div>
                 </TabPane>
                 <TabPane tab="All Posts" key="2">
