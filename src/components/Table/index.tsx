@@ -67,7 +67,6 @@ const Table: FC<TableProps> = ({
     nextPage,
     previousPage,
     setPageSize,
-    setHiddenColumns,
     state: { pageIndex, pageSize }
   } = tableInstance;
 
@@ -76,7 +75,7 @@ const Table: FC<TableProps> = ({
     fetchData && fetchData({ pageIndex, pageSize });
   }, [fetchData, pageIndex, pageSize]);
 
-  console.log(nextPage);
+  const numberOfPages = pageOptions.length / pageSize;
 
   return (
     <>
@@ -144,14 +143,14 @@ const Table: FC<TableProps> = ({
                       getRowProps: () => JSX.IntrinsicAttributes &
                         React.ClassAttributes<HTMLTableRowElement> &
                         React.HTMLAttributes<HTMLTableRowElement>;
-                      original: { surveyId: any };
+                      original: { id: string };
                       cells: any[];
                     }) => {
                       prepareRow(row);
                       return (
                         <tr
                           {...row.getRowProps()}
-                          onClick={() => viewData(row.original.surveyId)}
+                          onClick={() => viewData(row.original.id)}
                           className="px-8 border text-center rounded-lg cursor-pointer shadow-2xl mb-8">
                           {row.cells.map(
                             (cell: {
@@ -168,7 +167,9 @@ const Table: FC<TableProps> = ({
                                 | null
                                 | undefined;
                             }) => (
-                              <td {...cell.getCellProps()} className="bg-white py-4 capitalize">
+                              <td
+                                {...cell.getCellProps()}
+                                className="bg-white py-4 capitalize min-w-[100px]">
                                 {cell.render('Cell')}
                               </td>
                             )
@@ -182,7 +183,7 @@ const Table: FC<TableProps> = ({
             </div>
             <div>
               {Boolean(isPaginated) && (
-                <div className="my-6 shadow-md py-4 px-3 rounded-lg bg-white flex w-6/12 justify-between">
+                <div className="my-6 shadow-md py-4 px-3 rounded-lg bg-white flex sm:w-6/12 w-full justify-between">
                   <button
                     type="button"
                     className="text-sky-600 py-2 px-4 border rounded-md"
@@ -193,28 +194,30 @@ const Table: FC<TableProps> = ({
                   <button
                     type="button"
                     className="bg-sky-50 text-black py-2 px-4 rounded-md"
-                    onClick={() => gotoPage(0)}>
+                    onClick={() => gotoPage(pageIndex)}>
                     {pageIndex + 1}
                   </button>
                   <button
                     type="button"
                     className="text-sky-700 py-2 px-4 border rounded-md"
-                    onClick={() => gotoPage(1)}>
+                    onClick={() => gotoPage(pageIndex + 1)}>
                     {pageIndex + 2}
                   </button>
                   <button
                     type="button"
                     className="text-sky-700 py-2 px-4 border rounded-md"
-                    onClick={() => gotoPage(2)}>
+                    onClick={() => gotoPage(pageIndex + 2)}>
                     {pageIndex + 3}
                   </button>
-                  <button
-                    className="text-sky-700 py-2 px-4 border rounded-md"
-                    type="button"
-                    onClick={() => nextPage()}
-                    disabled={!canNextPage}>
-                    Next
-                  </button>
+                  {pageIndex === numberOfPages - 1 ? null : (
+                    <button
+                      className="text-sky-700 py-2 px-4 border rounded-md"
+                      type="button"
+                      onClick={() => nextPage()}
+                      disabled={!canNextPage}>
+                      Next
+                    </button>
+                  )}
                 </div>
               )}
             </div>

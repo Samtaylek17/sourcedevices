@@ -7,6 +7,13 @@ export interface UserInterface {
   firstName: string;
   lastName: string;
   picture?: string;
+  email?: string;
+  phone?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  location?: Record<string, any>;
+  registerDate?: string;
+  updatedDate?: string;
 }
 
 interface UserInitialState {
@@ -119,7 +126,7 @@ export const fetchUser = (id: string) => async (dispatch: Dispatch) => {
   try {
     dispatch(getUserStart());
     const user = await getUser(id);
-    dispatch(getUserSuccess(user));
+    dispatch(getUserSuccess(user.data));
   } catch (err: any) {
     dispatch(getUserFailure(err.toString()));
   }

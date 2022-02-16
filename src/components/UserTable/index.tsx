@@ -1,6 +1,8 @@
 import { FC, useCallback, useRef, useState } from 'react';
 import { message, Checkbox } from 'antd';
+import { useDispatch } from 'react-redux';
 import { getAllUsersWithFilters } from 'api/endpoints';
+import { fetchUser } from 'slices/userSlice';
 import Table from '../Table';
 
 const UserTable: FC = () => {
@@ -8,6 +10,8 @@ const UserTable: FC = () => {
   const [tableLoading, setTableLoading] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [data, setData] = useState([]);
+
+  const dispatch = useDispatch();
 
   const fetchAPIData = async ({ limit, page }) => {
     try {
@@ -35,23 +39,18 @@ const UserTable: FC = () => {
     {
       Header: <Checkbox />,
       accessor: 'actions',
-      Cell: useCallback(
-        () => (
-          <td className="text-center">
-            <Checkbox />
-          </td>
-        ),
-        []
-      )
+      Cell: useCallback(() => <Checkbox />, [])
     },
     {
-      Header: '',
-      accessor: 'picture',
+      Header: 'OWNER',
+      accessor: 'owner',
       Cell: useCallback(
-        ({ value }) => (
-          <td className="text-center">
-            <img src={value} alt={value} className="rounded-full h-9 w-9 inline-block" />
-          </td>
+        (cellInfo) => (
+          <img
+            src={cellInfo.row.original.picture}
+            alt={cellInfo.row.original.picture}
+            className="rounded-full h-9 w-9 inline-block"
+          />
         ),
         []
       )
@@ -74,8 +73,8 @@ const UserTable: FC = () => {
     }
   ];
 
-  const viewUser = () => {
-    console.log('This is a user');
+  const viewUser = (id: string) => {
+    dispatch(fetchUser(id));
   };
 
   return (

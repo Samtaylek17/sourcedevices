@@ -65,7 +65,7 @@ export async function getAllUsers(): Promise<any> {
   return api.get(url);
 }
 
-export async function getUser(id: string): Promise<User> {
+export async function getUser(id: string): Promise<any> {
   const url = `${process.env.REACT_APP_BASE_URL}/user/${id}`;
   return api.get(url);
 }
@@ -97,7 +97,7 @@ export async function getAllPostsWithFilter({
  * @param id
  * @returns Post object
  */
-export async function getPost(id: string): Promise<Post> {
+export async function getPost(id: string): Promise<any> {
   const url = `${process.env.REACT_APP_BASE_URL}/post${id}`;
   return api.get(url);
 }

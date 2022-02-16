@@ -13,6 +13,7 @@ import Table from 'components/Table';
 import Lady from 'assets/images/alhaja.png';
 import UserTable from 'components/UserTable';
 import { fetchUsers } from 'slices/userSlice';
+import PostTable from 'components/PostTable';
 
 const { TabPane } = Tabs;
 
@@ -118,13 +119,13 @@ const Dashboard = () => {
                   </div>
                 </TabPane>
                 <TabPane tab="All Posts" key="2">
-                  Content of Tab Pane 2
+                  <PostTable />
                 </TabPane>
               </Tabs>
             </div>
 
             <div>
-              <EmptyPostCard />
+              <ProfileCard />
             </div>
           </div>
         </div>
