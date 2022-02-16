@@ -1,13 +1,10 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import Lady from 'assets/images/alhaja.png';
 import { RootState } from 'app/rootReducer';
-import { current } from '@reduxjs/toolkit';
 
 const ProfileCard: FC = () => {
   const { currentUser } = useSelector((state: RootState) => state.users);
-  console.log(currentUser);
 
   return (
     <div className="bg-white rounded-lg p-6 h-auto">

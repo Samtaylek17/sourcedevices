@@ -1,5 +1,5 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { createUser, getAllUsersWithFilters, getUser } from '../api/endpoints';
+import { createUser, getAllUsersWithFilters, getUser } from 'api/endpoints';
 
 export interface UserInterface {
   id: string;
