@@ -17,7 +17,7 @@ const PostCard: FC = () => {
               <img
                 src={currentPost?.image}
                 alt={currentPost?.text}
-                className="w-full max-w-full h-full rounded-t-lg"
+                className="w-full max-w-full h-64 rounded-t-lg object-cover"
               />
               <p className="mt-2">{currentPost?.text}</p>
               <div className="mt-2 text-red-600">

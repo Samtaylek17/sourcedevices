@@ -13,7 +13,7 @@ type FormProps = {
 const UserForm: FC<FormProps> = ({ isSubmitted }) => {
   const dispatch = useDispatch();
 
-  const { isLoading } = useSelector((state: RootState) => state.users);
+  const { isLoading, error } = useSelector((state: RootState) => state.users);
 
   const formik = useFormik({
     initialValues: {
@@ -35,9 +35,9 @@ const UserForm: FC<FormProps> = ({ isSubmitted }) => {
     onSubmit: (values) => {
       const { firstName, lastName, email, title } = values;
       dispatch(addUser({ firstName, lastName, email, title }));
-      setTimeout(() => {
+      if (error === null) {
         isSubmitted();
-      }, 5000);
+      }
     }
   });
 

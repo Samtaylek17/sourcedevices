@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Tabs } from 'antd';
 import UserForm from 'components/UserForm';
 import Modal from 'components/Modal';
@@ -7,7 +6,6 @@ import { ReactComponent as AddUserIcon } from 'assets/icons/user-plus.svg';
 import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
 import { ReactComponent as PostIcon } from 'assets/icons/post.svg';
 import { ReactComponent as MessageIcon } from 'assets/icons/message.svg';
-import { RootState } from 'app/rootReducer';
 import ProfileCard from 'components/ProfileCard';
 import PostCard from 'components/PostCard';
 import UserTable from 'components/UserTable';
@@ -23,7 +21,6 @@ const Dashboard = () => {
   const [posts, setPosts] = useState(0);
   const [comments, setComments] = useState(0);
   const [tabKey, setTabKey] = useState('1');
-  const { error } = useSelector((state: RootState) => state.users);
 
   const fetchData = async () => {
     const userRes = await getAllUsers();
@@ -36,16 +33,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const closeModal = () => {
     setOpenModal(false);
   };
 
   const onSubmitForm = () => {
-    if (error === null) {
-      setOpenModal(false);
-    }
+    setOpenModal(false);
   };
 
   const openSidebar = () => {

@@ -186,7 +186,7 @@ const Table: FC<TableProps> = ({
             </div>
             <div>
               {Boolean(isPaginated) && (
-                <div className="my-6 shadow-md py-4 px-3 rounded-lg bg-white flex w-6/12 overflow-x-scroll  justify-between">
+                <div className="my-6 shadow-md py-4 px-3 rounded-lg bg-white flex sm:w-6/12 w-full overflow-x-scroll  justify-between">
                   <button
                     type="button"
                     className="text-sky-600 py-2 px-4 border rounded-md"
