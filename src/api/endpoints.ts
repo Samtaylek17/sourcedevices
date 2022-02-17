@@ -1,25 +1,5 @@
 import api from './api';
 
-interface User {
-  id: string;
-  title?: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  registerDate?: string;
-  updatedDate?: string;
-}
-
-interface Post {
-  id: string;
-  image: string;
-  likes: number;
-  tags: string[];
-  text: string;
-  publishDate: string;
-  owner: Partial<User>;
-}
-
 /** Users Endpoints */
 
 /**
@@ -27,7 +7,7 @@ interface Post {
  * @param param0 {firstName, lastName, email, title, file}
  * @returns User object
  */
-export async function createUser({ firstName, lastName, email, title, file }): Promise<User> {
+export async function createUser({ firstName, lastName, email, title, file }): Promise<any> {
   const url = `${process.env.REACT_APP_BASE_URL}/user/create`;
   return api.post(
     url,
@@ -98,6 +78,11 @@ export async function getAllPostsWithFilter({
  * @returns Post object
  */
 export async function getPost(id: string): Promise<any> {
-  const url = `${process.env.REACT_APP_BASE_URL}/post${id}`;
+  const url = `${process.env.REACT_APP_BASE_URL}/post/${id}`;
+  return api.get(url);
+}
+
+export async function getAllComments(): Promise<any> {
+  const url = `${process.env.REACT_APP_BASE_URL}/comment`;
   return api.get(url);
 }

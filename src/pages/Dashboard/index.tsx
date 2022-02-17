@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Tabs, message, Checkbox } from 'antd';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Tabs } from 'antd';
+import UserForm from 'components/UserForm';
+import Modal from 'components/Modal';
 import { ReactComponent as AddUserIcon } from 'assets/icons/user-plus.svg';
 import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
 import { ReactComponent as PostIcon } from 'assets/icons/post.svg';
@@ -8,27 +10,42 @@ import { ReactComponent as MessageIcon } from 'assets/icons/message.svg';
 import { RootState } from 'app/rootReducer';
 import ProfileCard from 'components/ProfileCard';
 import PostCard from 'components/PostCard';
-import EmptyPostCard from 'components/EmptyPostCard';
-import Table from 'components/Table';
-import Lady from 'assets/images/alhaja.png';
 import UserTable from 'components/UserTable';
-import { fetchUsers } from 'slices/userSlice';
+import { getAllUsers, getAllPosts, getAllComments } from 'api/endpoints';
 import PostTable from 'components/PostTable';
 
 const { TabPane } = Tabs;
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { userList } = useSelector((state: RootState) => state.users);
+  const [openModal, setOpenModal] = useState(false);
+  const [users, setUsers] = useState(0);
+  const [posts, setPosts] = useState(0);
+  const [comments, setComments] = useState(0);
+  const [tabKey, setTabKey] = useState('1');
+  const { error } = useSelector((state: RootState) => state.users);
 
-  const dispatch = useDispatch();
+  const fetchData = async () => {
+    const userRes = await getAllUsers();
+    const postRes = await getAllPosts();
+    const commentRes = await getAllComments();
+    setUsers(userRes.data.total);
+    setPosts(postRes.data.total);
+    setComments(commentRes.data.total);
+  };
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    fetchData();
   }, []);
 
-  const viewUser = () => {
-    console.log('This is a user');
+  const closeModal = () => {
+    setOpenModal(false);
+  };
+
+  const onSubmitForm = () => {
+    if (error === null) {
+      setOpenModal(false);
+    }
   };
 
   const openSidebar = () => {
@@ -45,10 +62,38 @@ const Dashboard = () => {
         className={`flex-none ${
           sidebarOpen ? 'w-[116px]' : 'w-0 sm:w-[116px]'
         } h-screen overflow-y-scroll transition-all bg-primary`}>
-        <div className="flex flex-col items-center w-full justify-center mt-10">
+        <button
+          type="button"
+          className="flex flex-col items-center w-full justify-center mt-10"
+          onClick={() => setOpenModal(true)}>
           <AddUserIcon />
           <p className="text-white uppercase text-xs">Add a user</p>
-        </div>
+        </button>
+        <Modal isOpen={openModal}>
+          <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="sm:items-start w-full">
+                <div className="mt-3 sm:mt-0 sm:text-left">
+                  <h3
+                    className="mb-3 text-3xl uppercase font-bold leading-6 text-slate-500"
+                    id="modal-title">
+                    Add User
+                  </h3>
+                  <p className="text-lg text-slate-500 font-medium">Personal Details</p>
+                  <UserForm isSubmitted={() => onSubmitForm()} />
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end">
+              <button
+                type="button"
+                onClick={closeModal}
+                className="py-2 px-4 bg-red-600 text-white rounded-md">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
       <div className="grow w-24 h-screen overflow-y-scroll bg-light">
         <div className="w-full flex justify-between bg-white shadow-lg sm:px-10 px-4 py-6">
@@ -91,28 +136,28 @@ const Dashboard = () => {
             <UserIcon />
             <div className="px-4">
               <p className="uppercase text-xs text-grey">Users</p>
-              <h3 className="text-2xl py-1 font-medium">{userList.length}</h3>
+              <h3 className="text-2xl py-1 font-medium">{users}</h3>
             </div>
           </div>
           <div className="shadow-lg rounded-md items-center flex bg-white px-8 py-6 my-3 sm:my-0">
             <PostIcon />
             <div className="px-4">
               <p className="uppercase text-xs text-grey">Posts</p>
-              <h3 className="text-2xl py-1 font-medium">67</h3>
+              <h3 className="text-2xl py-1 font-medium">{posts}</h3>
             </div>
           </div>
           <div className="shadow-lg rounded-md items-center flex bg-white px-8 py-6 my-3 sm:my-0">
             <MessageIcon />
             <div className="px-4">
               <p className="uppercase text-xs text-grey">Comments</p>
-              <h3 className="text-2xl py-1 font-medium">67</h3>
+              <h3 className="text-2xl py-1 font-medium">{comments}</h3>
             </div>
           </div>
         </div>
         <div className="container sm:px-8 mt-16">
           <div className="grid lg:grid-cols-3 sm:grid-cols-3 md:grid-cols-1 sm:gap-16 grid-cols-1">
             <div className="col-span-2">
-              <Tabs defaultActiveKey="1">
+              <Tabs defaultActiveKey="1" onChange={(activeKey) => setTabKey(activeKey)}>
                 <TabPane tab="All Users" key="1">
                   <div className="">
                     <UserTable />
@@ -124,9 +169,7 @@ const Dashboard = () => {
               </Tabs>
             </div>
 
-            <div>
-              <ProfileCard />
-            </div>
+            <div>{tabKey === '1' ? <ProfileCard /> : <PostCard />}</div>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { createUser, getAllUsersWithFilters, getUser } from 'api/endpoints';
+import { message } from 'antd';
+import { createUser, getAllUsers, getUser } from 'api/endpoints';
 
 export interface UserInterface {
   id: string;
@@ -94,40 +95,53 @@ export const {
 
 export default users.reducer;
 
-interface IAction {
-  type: string;
-  payload?: Record<string, unknown> | null;
-}
-
 export const addUser =
-  ({ firstName, lastName, email, title, file }) =>
-  async (dispatch: (arg: IAction) => void) => {
+  ({
+    firstName,
+    lastName,
+    email,
+    title,
+    file
+  }: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    title: string;
+    file?: any;
+  }) =>
+  async (dispatch: Dispatch): Promise<any> => {
     try {
       dispatch(addUserStart());
       const user = await createUser({ firstName, lastName, email, title, file });
-      dispatch(addUserSuccess(user));
+      dispatch(addUserSuccess(user.data));
     } catch (err: any) {
-      dispatch(addUserFailure(err.toString()));
+      message.error(err.response.data.data.email.toString());
+      dispatch(addUserFailure(err.response.data.data.email.toString()));
     }
   };
 
 export const fetchUsers =
-  (limit?: number, page?: number) => async (dispatch: (arg: IAction) => void) => {
+  () =>
+  async (dispatch: Dispatch): Promise<any> => {
     try {
       dispatch(getUsersStart());
-      const users = await getAllUsersWithFilters({ limit, page });
+      const users = await getAllUsers();
       dispatch(getUsersSuccess(users.data.data));
     } catch (err: any) {
-      dispatch(getUsersFailure(err.toString()));
+      message.error(err.response.data.data.toString());
+      dispatch(getUsersFailure(err.response.data.data.toString()));
     }
   };
 
-export const fetchUser = (id: string) => async (dispatch: Dispatch) => {
-  try {
-    dispatch(getUserStart());
-    const user = await getUser(id);
-    dispatch(getUserSuccess(user.data));
-  } catch (err: any) {
-    dispatch(getUserFailure(err.toString()));
-  }
-};
+export const fetchUser =
+  (id: string) =>
+  async (dispatch: Dispatch): Promise<any> => {
+    try {
+      dispatch(getUserStart());
+      const user = await getUser(id);
+      dispatch(getUserSuccess(user.data));
+    } catch (err: any) {
+      message.error(err.response.data.data.toString());
+      dispatch(getUserFailure(err.response.data.data.toString()));
+    }
+  };

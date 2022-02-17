@@ -1,6 +1,6 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { getAllPosts, getAllPostsWithFilter, getPost } from 'api/endpoints';
-import reducer, { UserInterface } from './userSlice';
+import { getAllPosts, getPost } from 'api/endpoints';
+import { UserInterface } from './userSlice';
 
 export interface PostInterface {
   id: string;
@@ -83,6 +83,7 @@ export const fetchPosts = () => async (dispatch: Dispatch) => {
 
 export const fetchPost = (id: string) => async (dispatch: Dispatch) => {
   try {
+    dispatch(getPostStart());
     const post = await getPost(id);
     dispatch(getPostSuccess(post.data));
   } catch (err: any) {

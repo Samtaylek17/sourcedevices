@@ -1,7 +1,9 @@
 import { FC, useCallback, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { message, Checkbox } from 'antd';
 import moment from 'moment';
 import { getAllPostsWithFilter } from 'api/endpoints';
+import { fetchPost } from 'slices/postSlice';
 import Table from '../Table';
 
 const PostTable: FC = () => {
@@ -9,6 +11,7 @@ const PostTable: FC = () => {
   const [tableLoading, setTableLoading] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [data, setData] = useState([]);
+  const dispatch = useDispatch();
 
   const fetchAPIData = async ({ limit, page }) => {
     try {
@@ -99,8 +102,8 @@ const PostTable: FC = () => {
     }
   ];
 
-  const viewUser = () => {
-    console.log('This is a user');
+  const viewPost = (id: string) => {
+    dispatch(fetchPost(id));
   };
 
   return (
@@ -108,7 +111,7 @@ const PostTable: FC = () => {
       pageCount={pageCount}
       data={data}
       columns={columns}
-      viewData={viewUser}
+      viewData={viewPost}
       fetchData={fetchData}
       loading={tableLoading}
     />

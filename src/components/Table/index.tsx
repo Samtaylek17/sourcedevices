@@ -1,5 +1,5 @@
 import React, { useMemo, FC, useEffect } from 'react';
-import { useTable, useSortBy, usePagination, useRowSelect, useExpanded } from 'react-table';
+import { useTable, useSortBy, usePagination, useExpanded } from 'react-table';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import { UserInterface } from 'slices/userSlice';
@@ -22,8 +22,7 @@ const Table: FC<TableProps> = ({
   loading,
   fetchData,
   viewData,
-  isPaginated = true,
-  ...props
+  isPaginated = true
 }) => {
   const defaultColumn = useMemo(
     () => ({
@@ -62,13 +61,17 @@ const Table: FC<TableProps> = ({
     canPreviousPage,
     canNextPage,
     pageOptions,
-    pageCount,
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
     state: { pageIndex, pageSize }
   } = tableInstance;
+
+  const pageNumbers: number[] = [];
+
+  for (let i: number = 1; i <= Math.ceil(pageOptions.length / pageSize); i++) {
+    pageNumbers.push(i);
+  }
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
@@ -119,7 +122,7 @@ const Table: FC<TableProps> = ({
                             <th
                               {...column.getHeaderProps(column.getSortByToggleProps())}
                               scope="col"
-                              className="text-center py-4">
+                              className="text-center py-4 font-normal text-grey">
                               {column.render('Header')}
                               {column.isSorted ? (
                                 column.isSortedDesc ? (
@@ -183,7 +186,7 @@ const Table: FC<TableProps> = ({
             </div>
             <div>
               {Boolean(isPaginated) && (
-                <div className="my-6 shadow-md py-4 px-3 rounded-lg bg-white flex sm:w-6/12 w-full justify-between">
+                <div className="my-6 shadow-md py-4 px-3 rounded-lg bg-white flex w-6/12 overflow-x-scroll  justify-between">
                   <button
                     type="button"
                     className="text-sky-600 py-2 px-4 border rounded-md"
@@ -191,24 +194,17 @@ const Table: FC<TableProps> = ({
                     disabled={!canPreviousPage}>
                     Prev
                   </button>
-                  <button
-                    type="button"
-                    className="bg-sky-50 text-black py-2 px-4 rounded-md"
-                    onClick={() => gotoPage(pageIndex)}>
-                    {pageIndex + 1}
-                  </button>
-                  <button
-                    type="button"
-                    className="text-sky-700 py-2 px-4 border rounded-md"
-                    onClick={() => gotoPage(pageIndex + 1)}>
-                    {pageIndex + 2}
-                  </button>
-                  <button
-                    type="button"
-                    className="text-sky-700 py-2 px-4 border rounded-md"
-                    onClick={() => gotoPage(pageIndex + 2)}>
-                    {pageIndex + 3}
-                  </button>
+                  {pageNumbers.map((number) => (
+                    <button
+                      type="button"
+                      key={number}
+                      className={`${
+                        number === pageIndex + 1 ? 'bg-sky-50 font-bold' : 'text-sky-700 border'
+                      } py-2 px-4 rounded-md`}
+                      onClick={() => gotoPage(number - 1)}>
+                      {number}
+                    </button>
+                  ))}
                   {pageIndex === numberOfPages - 1 ? null : (
                     <button
                       className="text-sky-700 py-2 px-4 border rounded-md"
