@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ReactComponent as PostIcon } from 'assets/icons/empty_post.svg';
+import { ReactComponent as PostIcon } from '../../assets/icons/empty_post.svg';
 
 const EmptyPostCard: FC = () => (
   <div className="flex items-center justify-center bg-white rounded-lg p-6 h-[458px] mb-8">

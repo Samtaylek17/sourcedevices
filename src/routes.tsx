@@ -2,8 +2,8 @@ import { Suspense, lazy } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Spin } from 'antd';
 
-const Dashboard = lazy(() => import('pages/Dashboard'));
-const NotFound = lazy(() => import('pages/404'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const NotFound = lazy(() => import('./pages/404'));
 
 const styles = {
   margin: '20px 0',

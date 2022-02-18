@@ -1,5 +1,5 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
-import { getAllPosts, getPost } from 'api/endpoints';
+import { getAllPosts, getPost } from '../api/endpoints';
 import { UserInterface } from './userSlice';
 
 export interface PostInterface {

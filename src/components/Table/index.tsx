@@ -2,7 +2,7 @@ import React, { useMemo, FC, useEffect } from 'react';
 import { useTable, useSortBy, usePagination, useExpanded } from 'react-table';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import { UserInterface } from 'slices/userSlice';
+import { UserInterface } from '../../slices/userSlice';
 import { ReactComponent as EmptyTableIcon } from '../../assets/icons/empty_table.svg';
 
 interface TableProps {

@@ -1,9 +1,9 @@
 import { FC, useCallback, useRef, useState } from 'react';
 import { message, Checkbox } from 'antd';
 import { useDispatch } from 'react-redux';
-import { getAllUsersWithFilters } from 'api/endpoints';
-import { fetchUser } from 'slices/userSlice';
-import UserIcon from 'assets/icons/user.svg';
+import { getAllUsersWithFilters } from '../../api/endpoints';
+import { fetchUser } from '../../slices/userSlice';
+import UserIcon from '../../assets/icons/user.svg';
 import Table from '../Table';
 
 const UserTable: FC = () => {

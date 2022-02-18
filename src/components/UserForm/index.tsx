@@ -3,8 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spin } from 'antd';
-import { addUser } from 'slices/userSlice';
-import { RootState } from 'app/rootReducer';
+import { addUser } from '../../slices/userSlice';
+import { RootState } from '../../app/rootReducer';
 
 type FormProps = {
   isSubmitted: () => void;

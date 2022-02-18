@@ -2,8 +2,8 @@ import { FC, useCallback, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { message, Checkbox } from 'antd';
 import moment from 'moment';
-import { getAllPostsWithFilter } from 'api/endpoints';
-import { fetchPost } from 'slices/postSlice';
+import { getAllPostsWithFilter } from '../../api/endpoints';
+import { fetchPost } from '../../slices/postSlice';
 import Table from '../Table';
 
 const PostTable: FC = () => {

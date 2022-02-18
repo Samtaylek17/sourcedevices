@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import lottie from 'lottie-web';
-import LottieFile from 'assets/404.json';
+import LottieFile from '../../assets/404.json';
 
 const NotFound: FC = () => {
   const imageRef = useRef<any>(null);

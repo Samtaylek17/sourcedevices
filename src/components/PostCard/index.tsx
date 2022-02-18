@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Spin } from 'antd';
-import { RootState } from 'app/rootReducer';
-import EmptyPostCard from 'components/EmptyPostCard';
+import { RootState } from '../../app/rootReducer';
+import EmptyPostCard from '../EmptyPostCard';
 
 const PostCard: FC = () => {
   const { isLoading, currentPost } = useSelector((state: RootState) => state.posts);

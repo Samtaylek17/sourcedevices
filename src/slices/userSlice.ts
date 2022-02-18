@@ -1,6 +1,6 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { message } from 'antd';
-import { createUser, getAllUsers, getUser } from 'api/endpoints';
+import { createUser, getAllUsers, getUser } from '../api/endpoints';
 
 export interface UserInterface {
   id: string;

@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Spin } from 'antd';
 import moment from 'moment';
-import { RootState } from 'app/rootReducer';
-import EmptyProfileCard from 'components/EmptyProfileCard';
-import UserIcon from 'assets/icons/user.svg';
+import { RootState } from '../../app/rootReducer';
+import EmptyProfileCard from '../EmptyProfileCard';
+import UserIcon from '../../assets/icons/user.svg';
 
 const ProfileCard: FC = () => {
   const { isLoading, currentUser } = useSelector((state: RootState) => state.users);

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Tabs } from 'antd';
-import UserForm from 'components/UserForm';
-import Modal from 'components/Modal';
-import { ReactComponent as AddUserIcon } from 'assets/icons/user-plus.svg';
-import { ReactComponent as UserIcon } from 'assets/icons/user.svg';
-import { ReactComponent as PostIcon } from 'assets/icons/post.svg';
-import { ReactComponent as MessageIcon } from 'assets/icons/message.svg';
-import ProfileCard from 'components/ProfileCard';
-import PostCard from 'components/PostCard';
-import UserTable from 'components/UserTable';
-import { getAllUsers, getAllPosts, getAllComments } from 'api/endpoints';
-import PostTable from 'components/PostTable';
+import UserForm from '../../components/UserForm';
+import Modal from '../../components/Modal';
+import { ReactComponent as AddUserIcon } from '../../assets/icons/user-plus.svg';
+import { ReactComponent as UserIcon } from '../../assets/icons/user.svg';
+import { ReactComponent as PostIcon } from '../../assets/icons/post.svg';
+import { ReactComponent as MessageIcon } from '../../assets/icons/message.svg';
+import ProfileCard from '../../components/ProfileCard';
+import PostCard from '../../components/PostCard';
+import UserTable from '../../components/UserTable';
+import { getAllUsers, getAllPosts, getAllComments } from '../../api/endpoints';
+import PostTable from '../../components/PostTable';
 
 const { TabPane } = Tabs;
 
