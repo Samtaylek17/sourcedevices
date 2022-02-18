@@ -1,4 +1,5 @@
 FROM node:16.13.2
+# Setting node version
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
