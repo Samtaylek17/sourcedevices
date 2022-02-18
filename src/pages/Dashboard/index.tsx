@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Tabs } from 'antd';
 import UserForm from '../../components/UserForm';
-import Modal from '../../components/Modal';
+import UserModal from '../../components/ModalComponent';
 import { ReactComponent as AddUserIcon } from '../../assets/icons/user-plus.svg';
 import { ReactComponent as UserIcon } from '../../assets/icons/user.svg';
 import { ReactComponent as PostIcon } from '../../assets/icons/post.svg';
@@ -64,7 +64,7 @@ const Dashboard = () => {
           <AddUserIcon />
           <p className="text-white uppercase text-xs">Add a user</p>
         </button>
-        <Modal isOpen={openModal}>
+        <UserModal isOpen={openModal}>
           <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="sm:items-start w-full">
@@ -88,7 +88,7 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
-        </Modal>
+        </UserModal>
       </div>
       <div className="grow w-24 h-screen overflow-y-scroll bg-light">
         <div className="w-full flex justify-between bg-white shadow-lg sm:px-10 px-4 py-6">

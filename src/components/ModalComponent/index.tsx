@@ -5,7 +5,7 @@ interface ModalProps {
   children: ReactNode;
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, children }) => (
+const UserModal: FC<ModalProps> = ({ isOpen, children }) => (
   <section>
     <div
       className={`${!isOpen && 'hidden'} fixed z-10 inset-0 overflow-y-auto`}
@@ -28,4 +28,4 @@ const Modal: FC<ModalProps> = ({ isOpen, children }) => (
   </section>
 );
 
-export default Modal;
+export default UserModal;
